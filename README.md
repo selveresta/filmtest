@@ -15,7 +15,7 @@ Uses Express, Sequelize (with SQLite), and session‑based auth via Passport.js.
 
 ## Command to start
 
-`docker run --name movies -p 7000:7000 selveresta/movies:latest`
+`docker run --name movies -p 7000:1500 -e APP_PORT=1500 selveresta/movies:latest`
 
 ---
 
