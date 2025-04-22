@@ -1,6 +1,6 @@
 import { Optional } from "sequelize";
 
-export type  FormatType = "VHS" | "DVD" | "Blu-ray";
+export type FormatType = "VHS" | "DVD" | "Blu-ray";
 
 export interface MovieAttributes {
 	id: number;
@@ -16,4 +16,13 @@ export interface MovieCreateDTO {
 	year: number;
 	format: string;
 	actors: string[];
+}
+
+export interface MovieQueryOpts {
+	title?: string;
+	actor?: string;
+	sort?: "id" | "title" | "year";
+	order?: "ASC" | "DESC";
+	limit?: number;
+	offset?: number;
 }
