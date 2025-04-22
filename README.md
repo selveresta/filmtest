@@ -33,7 +33,7 @@ Uses Express, Sequelize (with SQLite), and session‑based auth via Passport.js.
     ```
 2. Edit `.env` and fill in values:
     ```ini
-    PORT=8000
+    APP_PORT=8000
     SESSION_SECRET=your_session_secret_here
     NODE_ENV=production
     ```

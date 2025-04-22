@@ -10,7 +10,7 @@ config();
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 const app = express();
-const PORT = parseInt(process.env.PORT ?? "8000", 10);
+const PORT = parseInt(process.env.APP_PORT ?? "8000", 10);
 
 app.use(express.json());
 
