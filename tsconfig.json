@@ -1,0 +1,30 @@
+{
+	"include": ["./src/**/*", "./types/**/*"],
+	"exclude": ["node_modules", "**/*.test.ts"],
+	"compilerOptions": {
+		"allowJs": false,
+		"alwaysStrict": false,
+		"baseUrl": ".",
+		"esModuleInterop": true,
+		"experimentalDecorators": true,
+		"moduleResolution": "node",
+		"removeComments": true,
+		"resolveJsonModule": true,
+		"newLine": "lf",
+		"noErrorTruncation": true,
+		"noImplicitAny": false,
+		"noUnusedLocals": true,
+		"paths": {
+			"@T/*": ["types/*"]
+		},
+		"outDir": "./dist",
+		"preserveWatchOutput": true,
+		"pretty": true,
+		"rootDir": "./src",
+		"sourceMap": false,
+		"strict": true,
+		"strictNullChecks": true,
+		"target": "ES2019",
+		"module": "CommonJS"
+	}
+}
