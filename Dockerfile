@@ -22,8 +22,11 @@ COPY --from=builder /app/dist ./dist
 RUN mkdir -p /app/db
 
 ARG APP_PORT=8000
+ARG SESSION_SECRET
+
 ENV APP_PORT=${APP_PORT} \
-    PORT=${APP_PORT}
+    PORT=${APP_PORT} \
+    SESSION_SECRET=${SESSION_SECRET}
 
 EXPOSE ${APP_PORT}
 
