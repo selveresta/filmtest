@@ -1,27 +1,27 @@
-import { Op } from "sequelize";
+import { Op, Transaction } from "sequelize";
 import Movie from "../models/movie.model";
 import Actor from "../models/actor.model";
 import actorService from "./actor.service";
 import ApiError from "../exceptions/api-error";
 import { FormatType, MovieCreateDTO, MovieQueryOpts } from "@T/movie";
+import sequelize from "../db";
 
 class MovieService {
-	async create(dto: MovieCreateDTO) {
-		const exists = await Movie.findOne({ where: { title: dto.title } });
-		if (exists) {
-			throw ApiError.BadRequest("Movie already exists");
-		}
+	public async create(dto: MovieCreateDTO) {
+		return sequelize.transaction(async (t: Transaction) => {
+			const exists = await Movie.findOne({ where: { title: dto.title }, transaction: t });
+			if (exists) {
+				throw ApiError.BadRequest("Movie already exists");
+			}
 
-		const movie = await Movie.create({
-			title: dto.title,
-			year: dto.year,
-			format: dto.format as any,
+			const movie = await Movie.create({ title: dto.title, year: dto.year, format: dto.format as any }, { transaction: t });
+
+			const actors = await Promise.all(dto.actors.map((name) => actorService.findOrCreate(name, t)));
+
+			await movie.setActors(actors, { transaction: t });
+
+			return movie.reload({ include: [{ model: Actor, as: "actors" }], transaction: t });
 		});
-
-		const actors = await Promise.all(dto.actors.map((name) => actorService.findOrCreate(name)));
-		console.log(actors);
-		await movie.setActors(actors);
-		return this.getById(movie.id);
 	}
 
 	async getById(id: number): Promise<Movie> {

@@ -1,11 +1,14 @@
-import { Op } from "sequelize";
+import { Op, Transaction } from "sequelize";
 import Actor from "../models/actor.model";
 import ApiError from "../exceptions/api-error";
 
 class ActorService {
-	async findOrCreate(name: string): Promise<Actor> {
-		const [actor] = await Actor.findOrCreate({ where: { name } });
-
+	async findOrCreate(name: string, transaction?: Transaction): Promise<Actor> {
+		const [actor] = await Actor.findOrCreate({
+			where: { name },
+			defaults: { name },
+			transaction,
+		});
 		return actor;
 	}
 
